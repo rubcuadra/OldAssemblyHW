@@ -1,0 +1,45 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 Print MACRO row, column    ;Imprime lo que este en Al\
+       mov Ah, 02h\
+       Mov Dl, row\
+       Mov Dh, column\
+       INT 10h ;Apunta a rows y columns\
+       \
+       mov Ah,09\
+       INT 10h ;Imprimir donde esta apuntando\
+Print endm\
+\
+org 100h   \
+\
+mov Bh, 00h\
+mov Bl,03h\
+mov Cx, 01h\
+Mov [150], 01h\
+\
+mov Ah, 00h\
+mov Al, 00h\
+INT 10h         ;Saca Pantalla\
+ \
+mov Al,'l'\
+VERTICAL: \
+    Print 30,[150] ;(1,X) \
+    Print 35,[150]\
+    INC [150]\
+    CMP [150], 0Eh \
+JNZ VERTICAL\
+\
+Mov [150], 25d \
+Mov Al,'-'\
+HORIZONTAL:  \
+    Print [150],5 \
+    Print [150],10\
+    INC [150]\
+    CMP [150], 40d\
+JNZ HORIZONTAL \
+      \
+RET}
